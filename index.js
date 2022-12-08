@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const tasks = require("./routes/tasks");
 
-const PORT = 5500;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log("Server is up and running on port " + PORT);
 });
@@ -12,6 +12,6 @@ app.use(express.json());
 
 app.use("/api/v1/tasks/", tasks);
 
-app.get("/hello", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello this is the task manager!");
 });
