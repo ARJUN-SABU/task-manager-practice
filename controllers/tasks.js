@@ -10,8 +10,13 @@ const getAllTasks = (req, res) => {
 };
 
 const createTask = (req, res) => {
-  console.log(req.body);
-  res.send("Creating a task!");
+  // console.log(req.body);
+  // res.send("Creating a task!");
+  req.db
+    .collection("tasks")
+    .insertOne(req.body)
+    .then((result) => res.status(200).json(result))
+    .catch((err) => res.status(500).send(err));
 };
 
 const getTask = (req, res) => {
