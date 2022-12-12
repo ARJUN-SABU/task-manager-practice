@@ -1,6 +1,12 @@
 const getAllTasks = (req, res) => {
-  console.log(req.db);
-  res.send("All the items from the file");
+  let tasks = [];
+  req.db
+    ?.collection("tasks")
+    .find()
+    .forEach((task) => tasks.push(task))
+    .then(() => res.status(200).json({ tasks }))
+    .catch((err) => res.status(500).send(err));
+  // res.send("All the items from the file");
 };
 
 const createTask = (req, res) => {
