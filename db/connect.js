@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
-const connectionString =
-  "mongodb+srv://arjun:1234@taskmanager.hlcifeh.mongodb.net/Task-Manager?retryWrites=true&w=majority";
+const connectionString = `mongodb+srv://${process.env.MONGODB_USER_NAME}:${process.env.MONGODB_PASSWORD}@taskmanager.hlcifeh.mongodb.net/Task-Manager?retryWrites=true&w=majority`;
 
 let db;
 const connectToDb = (cb) => {
