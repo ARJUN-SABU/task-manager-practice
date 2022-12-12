@@ -1,4 +1,5 @@
 const getAllTasks = (req, res) => {
+  console.log(req.db);
   res.send("All the items from the file");
 };
 
