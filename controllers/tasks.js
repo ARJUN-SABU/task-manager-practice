@@ -30,7 +30,7 @@ const getTask = (req, res) => {
       .catch((err) => res.status(400).send(err));
   } else {
     res.status(400).json({
-      "Error Message": "Invalid Id",
+      Error_Message: "Invalid Id",
     });
   }
 };
@@ -40,7 +40,19 @@ const updateTask = (req, res) => {
 };
 
 const deleteTask = (req, res) => {
-  res.send("Delete task!");
+  if (ObjectId.isValid(req.params.id)) {
+    req.db
+      .collection("tasks")
+      .deleteOne({
+        _id: ObjectId(req.params.id),
+      })
+      .then((result) => res.status(200).send(result))
+      .catch((err) => res.status(500).send(err));
+  } else {
+    res.status(400).send({
+      Error_Message: "Invalid Id",
+    });
+  }
 };
 
 module.exports = {
