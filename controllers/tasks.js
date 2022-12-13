@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 const getAllTasks = (req, res) => {
   let tasks = [];
   req.db
@@ -20,7 +22,17 @@ const createTask = (req, res) => {
 };
 
 const getTask = (req, res) => {
-  res.send("get single task!");
+  if (ObjectId.isValid(req.params.id)) {
+    req.db
+      .collection("tasks")
+      .findOne({ _id: ObjectId(req.params.id) })
+      .then((result) => res.status(200).json(result))
+      .catch((err) => res.status(400).send(err));
+  } else {
+    res.status(400).json({
+      "Error Message": "Invalid Id",
+    });
+  }
 };
 
 const updateTask = (req, res) => {
