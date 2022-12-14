@@ -36,7 +36,24 @@ const getTask = (req, res) => {
 };
 
 const updateTask = (req, res) => {
-  res.send("Update the task!");
+  if (ObjectId.isValid(req.params.id)) {
+    req.db
+      .collection("tasks")
+      .updateOne(
+        {
+          _id: ObjectId(req.params.id),
+        },
+        {
+          $set: req.body,
+        }
+      )
+      .then((result) => res.status(200).json(result))
+      .catch((err) => res.status(500).json(err));
+  } else {
+    res.status(400).json({
+      Error_message: "Invalid Id",
+    });
+  }
 };
 
 const deleteTask = (req, res) => {
