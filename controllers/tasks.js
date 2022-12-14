@@ -35,6 +35,7 @@ const getTask = (req, res) => {
   }
 };
 
+//Patch method: Updates only the required fields
 const updateTask = (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
     req.db
@@ -46,6 +47,26 @@ const updateTask = (req, res) => {
         {
           $set: req.body,
         }
+      )
+      .then((result) => res.status(200).json(result))
+      .catch((err) => res.status(500).json(err));
+  } else {
+    res.status(400).json({
+      Error_message: "Invalid Id",
+    });
+  }
+};
+
+//Put method: Replaces the entire document.
+const editTask = (req, res) => {
+  if (ObjectId.isValid(req.params.id)) {
+    req.db
+      .collection("tasks")
+      .replaceOne(
+        {
+          _id: ObjectId(req.params.id),
+        },
+        req.body
       )
       .then((result) => res.status(200).json(result))
       .catch((err) => res.status(500).json(err));
@@ -78,4 +99,5 @@ module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  editTask,
 };
