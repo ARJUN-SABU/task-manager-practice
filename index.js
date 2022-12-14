@@ -4,7 +4,7 @@ const tasks = require("./routes/tasks");
 const { connectToDb, getDbConnection } = require("./db/connect");
 const notFound = require("./middleware/not-found");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 let db;
 
 //middlewares
