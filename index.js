@@ -4,12 +4,13 @@ const tasks = require("./routes/tasks");
 const { connectToDb, getDbConnection } = require("./db/connect");
 const notFound = require("./middleware/not-found");
 
-//middlewares
-app.use(express.json());
-
 const PORT = 3000;
 let db;
 
+//middlewares
+app.use(express.json());
+
+//routes
 app.get("/", (req, res) => {
   res.send("Hello this is the task manager!");
 });
@@ -35,6 +36,7 @@ app.use(
 //this not found middleware will run.
 app.use(notFound);
 
+//connection
 connectToDb((err) => {
   if (!err) {
     app.listen(PORT, () => {
